@@ -31,8 +31,15 @@ public class Lab5 {
 	private static final Port rightPort = LocalEV3.get().getPort("S1");	
 	
 	private static final TextLCD lcd = LocalEV3.get().getTextLCD();
-	public static final double WHEEL_RAD = 2.2;
-	public static final double TRACK = 9.9;
+	public static final double WHEEL_RAD = 1.87;
+	public static final double TRACK = 8.415;
+	public static final double TILE_SIZE = 30.48;
+	public static final int HEIGHT = 3;
+	public static final int WIDTH = 3;
+	public static final int START_X = 2;
+	public static final int START_Y = 2;
+	public static final int END_X = 5;
+	public static final int END_Y = 5;
 
 	public static void main(String[] args) {
 		
@@ -91,19 +98,14 @@ public class Lab5 {
 
 		Navigation navi = new Navigation(odo);
 		
-		//Wait for button to be pressed - TA measure time
-		buttonChoice = Button.waitForAnyPress();
-		while (buttonChoice != Button.ID_ENTER && buttonChoice != Button.ID_ESCAPE);
-
-		//Light Localization
-		if (buttonChoice == Button.ID_ENTER) {
-			LightLocalization lsl = new LightLocalization(odo, leftColorValue, leftColorData, rightColorValue, rightColorData, navi);
-			lsl.doLocalization();	
-		}
-		//Terminate
-		else
-			System.exit(0);
+		LightLocalization lsl = new LightLocalization(odo, leftColorValue, leftColorData, rightColorValue, rightColorData, navi);
+		lsl.doLocalization();	
 		
+		TravelNav travNav = new TravelNav(odo, rightMotor, leftMotor, usValue, usData);
+		Driver driver = new Driver(odo, usValue, usData, leftColorValue, leftColorData, rightColorValue, rightColorData, travNav);
+		driver.doSpiral(HEIGHT, WIDTH, START_X-1, START_Y-1, END_X-1, END_Y-1);
+		
+
 		//Terminate
 		while (Button.waitForAnyPress() != Button.ID_ESCAPE);
 		System.exit(0);	

@@ -20,6 +20,9 @@ public class Navigation {
 	final static int MOTOR_SPEED = 90;			//Motor speed when turning
 	final static int ACCELERATION = 2000;		//Acceleration rate to reduce drifting 
 	final static double DEGREE_ERROR = 3.0;		//Acceptable error of degree
+	private static final int FORWARD_SPEED = 150;		//Speed of the motors when advancing to the next destination
+	private static final int MOTOR_DIFF = 1;			//Constant subtracted to compensate for the inequality of the motors
+	private static final int ROTATE_SPEED = 100;		//Speed of the motors when the robot is turning towards its next destination
 
 	/**
 	 * This is the class constructor
@@ -90,5 +93,10 @@ public class Navigation {
 			this.setSpeeds(0, 0);
 		}
 	}
+	
+	
+	
+	
+	
 
 }

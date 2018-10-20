@@ -17,7 +17,7 @@ import ca.mcgill.ecse211.Lab5.Navigation;
 public class LightLocalization {
 	
 	//constants
-	public static int MOTOR_SPEED = 70;				//Motor speed when advancing and turning
+	public static int MOTOR_SPEED = 100;				//Motor speed when advancing and turning
 	public static int DISTANCE_FROM_EDGE = 10;		//Distance needed to back up to read y values
 	public static int ACCELERATION = 600;			//Low acceleration rate to reduce drifting
 	private static double lightSensorDistanceX = 4.5;		//Distance from center of robot to the light sensor horizontally
@@ -316,6 +316,20 @@ public class LightLocalization {
 		//Advance to set x to 0 and copensate for the offset of the light sensor
 		leftMotor.rotate(convertDistance(Lab5.WHEEL_RAD, DISTANCE_FROM_EDGE + lightSensorDistanceX), true);
 		rightMotor.rotate(convertDistance(Lab5.WHEEL_RAD, DISTANCE_FROM_EDGE + lightSensorDistanceX), false);
+		
+		//Rotate 90 degrees to face theta 0
+		leftMotor.rotate(convertAngle(Lab5.WHEEL_RAD, Lab5.TRACK, -90.0), true);
+		rightMotor.rotate(-convertAngle(Lab5.WHEEL_RAD, Lab5.TRACK, -90.0), false);
+		
+		
+		position[0] = 0;
+		position[1] = 0;
+		position[2] = 0;
+		posBool[0] = false;
+		posBool[1] = false;
+		posBool[2] = true;
+		odo.setPosition(position, posBool);
+		
 
 	}
 	
